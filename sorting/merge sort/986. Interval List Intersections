@@ -1,0 +1,23 @@
+class Solution:
+    def intervalIntersection(self, firstList: List[List[int]], secondList: List[List[int]]) -> List[List[int]]:
+        # first i initializing 2 pointers i and j for traverse in firstlist and secondlist from starting index
+        i, j = 0, 0
+        #store result in result variable 
+        result = []
+        #traverse in fistlist and secondlist 
+        while i <len(firstList) and j <len(secondList):
+            #initializing start variable in this we tak max for see to overlapping 
+            start = max(firstList[i][0], secondList[j][0])   #starting index of both lists
+            # initializing end variable in this we take min value for compare max and min of start and end in this we get overlapping 
+            end = min(firstList[i][1], secondList[j][1])
+            # condition imp start <= end then append 
+            if start <= end:
+                result.append([start, end])
+            #move pointers whose interval ends first
+            if firstList[i][1] < secondList[j][1]:
+                i +=1
+            else:
+                j += 1
+        #return the result 
+        return result 
+            
