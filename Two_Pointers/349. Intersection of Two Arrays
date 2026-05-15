@@ -1,0 +1,27 @@
+class Solution:
+    def intersection(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        #sort the array 
+        nums1.sort()
+        nums2.sort()
+        #first initializing 2 pointer i and j for traversing in nums1 and nums2
+        i, j = 0, 0
+        #initializing result variable for store intersection of two arrays
+        result = []
+        #travese through loop
+        while i <len(nums1) and j <len(nums2):
+            #condition for if number match in nums2
+            if nums1[i] == nums2[j]:
+                #condition for unique element 
+                if nums1[i] not in result:
+                    #then append in result 
+                    result.append(nums1[i])
+                #move a pointers 
+                i += 1
+                j += 1
+            #condition if number not match then move pointers 
+            elif nums1[i] < nums2[j]:
+                i +=1
+            else:
+                j +=1
+        return result
+
