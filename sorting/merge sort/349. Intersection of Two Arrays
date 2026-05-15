@@ -1,0 +1,67 @@
+class Solution:
+    def merge_sort(self,arr):
+        #base case 
+        if len(arr) <=1 :
+            return arr
+
+        #divide the arr 
+        mid = len(arr) //2
+
+        #recursion 
+        left = self.merge_sort(arr[:mid])
+        right = self.merge_sort(arr[mid:])
+
+        #merge sorted halves 
+        return self.merge(left, right)
+
+    def merge(self, left, right):
+        #initializing two pointers 
+        i, j = 0, 0
+
+        #initializing result variable
+        result = []
+
+        #traverse in left and right 
+        while i <len(left) and j <len(right):
+            #contion to sort the values 
+            if left[i] < right[j]:
+                result.append(left[i])
+                i += 1
+            else:
+                result.append(right[j])
+                j += 1
+
+        #remaining element now 
+        result.extend(left[i:])
+        result.extend(right[j:])
+
+        #return the result 
+        return result 
+
+    def intersection(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        #sort the array using merge sort
+        nums1 = self.merge_sort(nums1)
+        nums2 = self.merge_sort(nums2)
+
+        #first initializing 2 pointer i and j for traversing in nums1 and nums2
+        i, j = 0, 0
+        #initializing result variable for store intersection of two arrays
+        result = []
+        #travese through loop
+        while i <len(nums1) and j <len(nums2):
+            #condition for if number match in nums2
+            if nums1[i] == nums2[j]:
+                #condition for unique element 
+                if nums1[i] not in result:
+                    #then append in result 
+                    result.append(nums1[i])
+                #move a pointers 
+                i += 1
+                j += 1
+            #condition if number not match then move pointers 
+            elif nums1[i] < nums2[j]:
+                i +=1
+            else:
+                j +=1
+        return result
+
