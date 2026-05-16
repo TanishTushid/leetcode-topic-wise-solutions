@@ -1,0 +1,29 @@
+class Solution:
+    def pancakeSort(self, arr: List[int]) -> List[int]:
+        #initializing the variable result for storing the element 
+        result = []
+        #work from last index to first 
+        for i in range(len(arr), 1, -1):
+            #find the max element in arr
+            max_index = arr.index(max(arr[:i]))
+            #if already in correct position 
+            if max_index == i-1:
+                continue
+            #bring max element to front 
+            if max_index != 0:
+                self.flip(arr, max_index +1)
+                result.append(max_index +1)
+            #move max element to curr position 
+            self.flip(arr, i)
+            result.append(i)
+        #return the result 
+        return result 
+
+    #function for flip the element
+    def flip(self, arr, k):
+        left = 0
+        right = k -1
+        while left < right:
+            arr[left], arr[right] = arr[right], arr[left]
+            left +=1
+            right -=1
