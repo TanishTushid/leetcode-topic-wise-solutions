@@ -1,0 +1,46 @@
+from collections import Counter
+import random
+
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+
+        count = Counter(nums)
+
+        arr = list(count.items())
+
+        target = len(arr) - k
+
+        def quick_select(l, r):
+
+            if l >= r:
+                return
+
+            pivot_index = random.randint(l, r)
+
+            arr[pivot_index], arr[r] = arr[r], arr[pivot_index]
+
+            pivot_freq = arr[r][1]
+
+            i = l
+
+            for j in range(l, r):
+
+                if arr[j][1] <= pivot_freq:
+
+                    arr[i], arr[j] = arr[j], arr[i]
+
+                    i += 1
+
+            arr[i], arr[r] = arr[r], arr[i]
+
+            if i < target:
+
+                return quick_select(i + 1, r)
+
+            elif i > target:
+
+                return quick_select(l, i - 1)
+
+        quick_select(0, len(arr) - 1)
+
+        return [num for num, freq in arr[target:]]
