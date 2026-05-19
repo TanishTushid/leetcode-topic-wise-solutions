@@ -1,0 +1,103 @@
+class Solution:
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+
+        k = len(nums) - k
+        l, r = 0, len(nums) - 1
+
+        while l <= r:
+
+            pivot_index = random.randint(l, r)
+            nums[pivot_index], nums[r] = nums[r], nums[pivot_index]
+
+            pivot = nums[r]
+            i = l
+
+            for j in range(l, r):
+                if nums[j] <= pivot:
+                    nums[i], nums[j] = nums[j], nums[i]
+                    i += 1
+
+            nums[i], nums[r] = nums[r], nums[i]
+
+            if i == k:
+                return nums[i]
+
+            elif i < k:
+                l = i + 1
+
+            else:
+                r = i - 1
+
+
+        """
+        k = len(nums) - k
+
+        def quick_selection(l, r):
+
+            pivot_index = random.randint(l, r)
+            nums[pivot_index], nums[r] = nums[r], nums[pivot_index]
+
+            pivot = nums[r]
+            i = l
+
+            for j in range(l, r):
+                if nums[j] <= pivot:
+                    nums[i], nums[j] = nums[j], nums[i]
+                    i += 1
+
+            nums[i], nums[r] = nums[r], nums[i]
+
+            if i > k:
+                return quick_selection(l, i - 1)
+
+            elif i < k:
+                return quick_selection(i + 1, r)
+
+            else:
+                return nums[i]
+
+        return quick_selection(0, len(nums) - 1)
+
+        """
+
+
+
+        """
+        target = len(nums) - k
+        def partition(low, high):
+
+            pivot = nums[high]
+            i = low
+
+            for j in range(low, high):
+
+                if nums[j] <= pivot:
+                    nums[i], nums[j] = nums[j], nums[i]
+                    i += 1
+
+            nums[i], nums[high] = nums[high], nums[i]
+
+            return i
+
+        def quick_select(low, high):
+
+            if low == high:
+                return nums[low]
+
+            # random pivot
+            pivot_idx = random.randint(low, high)
+            nums[pivot_idx], nums[high] = nums[high], nums[pivot_idx]
+
+            pivot_idx = partition(low, high)
+
+            if pivot_idx == target:
+                return nums[pivot_idx]
+
+            elif pivot_idx < target:
+                return quick_select(pivot_idx + 1, high)
+
+            else:
+                return quick_select(low, pivot_idx - 1)
+
+        return quick_select(0, len(nums) - 1)
+        """
