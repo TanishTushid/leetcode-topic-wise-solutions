@@ -1,0 +1,26 @@
+class Solution:
+    def sortArrayByParity(self, nums: List[int]) -> List[int]:
+
+        left = 0
+        right = len(nums) -1
+        while left < right:
+            #move pointers left to right even numbers
+            while left < right and nums[left] %2 ==0:
+                left +=1
+            #move pointers right to left odd numbers 
+            while left < right and nums[right] %2 != 0:
+                right -= 1
+            nums[left], nums[right] = nums[right], nums[left]
+        return nums
+
+        """
+        brute force 
+        even = []
+        odd = []
+        for i in nums:
+            if i%2 == 0:
+                even.append(i)
+            else:
+                odd.append(i)
+        return even + odd
+        """
