@@ -5,7 +5,7 @@ class Node:
         self.val = int(x) 
         self.next = next
         self.random = random
-"""
+""" 
 class Solution:
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
         if not head:
