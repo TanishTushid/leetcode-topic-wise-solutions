@@ -1,0 +1,24 @@
+class Solution:
+    def topKFrequent(self, words: List[str], k: int) -> List[str]:
+        freq = Counter(words)
+        arr = list(freq.keys())
+
+        def is_greater(a, b):
+            if freq[a] != freq[b]:
+                return freq[a] > freq[b]
+            return a < b
+        
+        def quick_sort(left, right):
+            if left >= right:
+                return 
+            pivot = arr[right]
+            i = left 
+            for j in range(left, right):
+                if is_greater(arr[j], pivot):
+                    arr[i], arr[j] = arr[j], arr[i]
+                    i +=1
+            arr[i], arr[right] = arr[right], arr[i]
+            quick_sort(left, i -1)
+            quick_sort(i +1, right)
+        quick_sort(0, len(arr) -1)
+        return arr[:k]
