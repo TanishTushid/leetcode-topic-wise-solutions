@@ -1,0 +1,41 @@
+class Solution:
+    def frequencySort(self, s: str) -> str:
+        # Step 1: Count frequency
+        freq = {}
+
+        for ch in s:
+            freq[ch] = freq.get(ch, 0) + 1
+
+        # Step 2: Convert to list
+        arr = []
+
+        for ch, count in freq.items():
+            arr.append([ch, count])
+
+        # Step 3: Quick Sort (descending by frequency)
+        def quick_sort(low, high):
+            if low >= high:
+                return
+
+            pivot = arr[high][1]
+            i = low
+
+            for j in range(low, high):
+                if arr[j][1] > pivot:
+                    arr[i], arr[j] = arr[j], arr[i]
+                    i += 1
+
+            arr[i], arr[high] = arr[high], arr[i]
+
+            quick_sort(low, i - 1)
+            quick_sort(i + 1, high)
+
+        quick_sort(0, len(arr) - 1)
+
+        # Step 4: Build answer
+        result = []
+
+        for ch, count in arr:
+            result.append(ch * count)
+
+        return "".join(result)
