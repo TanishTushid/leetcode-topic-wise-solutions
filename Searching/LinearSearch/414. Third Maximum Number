@@ -1,0 +1,20 @@
+class Solution:
+    def thirdMax(self, nums: List[int]) -> int:
+
+        f = s = t = float("-inf")
+        for num in nums:
+            if num in (f, s, t):
+                continue
+            elif num > f:
+                t = s
+                s = f
+                f = num
+            elif num > s:
+                s = f
+                f = num
+            elif num > t:
+                t = num
+        if t == float("-inf"):
+            return f
+        return t
+        
