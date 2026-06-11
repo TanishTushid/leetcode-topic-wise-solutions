@@ -1,0 +1,27 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def averageOfLevels(self, root: Optional[TreeNode]) -> List[float]:
+    
+        if not root:            #handle empty list 
+            return [] 
+        result = []             #store final result         
+        queue = deque([root])   #store node to visit     
+        while queue:            #iterate     
+            level_sum = 0       #calculate sum        
+            level_size = len(queue)    #curr level node 
+            for _ in range(level_size): #process exatly those node 
+                node = queue.popleft()  #remove fist node 
+                level_sum += node.val   # sum to level sum 
+                if node.left:           # if left child exits add it 
+                    queue.append(node.left)
+                if node.right:          #if right child exits add it 
+                    queue.append(node.right)
+            result.append(level_sum / level_size) #calculate mean of that 
+        return result                              #return result 
+        
+        
