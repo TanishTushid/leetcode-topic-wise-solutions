@@ -1,0 +1,90 @@
+from collections import deque
+
+class Solution:
+    def shortestPathLength(self, graph: List[List[int]]) -> int:
+
+        # Total number of nodes in the graph
+        n = len(graph)
+
+        # Create a mask where all bits are 1
+        # Example: n = 4
+        # (1 << 4) = 10000
+        # 10000 - 1 = 1111
+        # This means all nodes have been visited
+        target_mask = (1 << n) - 1
+
+        # BFS queue
+        # Each state = (current_node, visited_mask, distance)
+        queue = deque()
+
+        # Stores visited states
+        # State = (node, mask)
+        visited = set()
+
+        # Multi-source BFS
+        # Start BFS from every node
+        for node in range(n):
+
+            # Create a mask with only this node visited
+            #
+            # node = 0 -> 0001
+            # node = 1 -> 0010
+            # node = 2 -> 0100
+            # node = 3 -> 1000
+            mask = 1 << node
+
+            # Add starting state to queue
+            #
+            # (node, mask, distance)
+            queue.append((node, mask, 0))
+
+            # Mark starting state as visited
+            visited.add((node, mask))
+
+        # Standard BFS loop
+        while queue:
+
+            # Get current state
+            node, mask, dist = queue.popleft()
+
+            # Check if all nodes have been visited
+            #
+            # Example:
+            # mask = 1111
+            # target_mask = 1111
+            if mask == target_mask:
+                return dist
+
+            # Visit all neighbors of current node
+            for nei in graph[node]:
+
+                # Mark neighbor as visited in the mask
+                #
+                # Example:
+                # mask      = 0101
+                # 1 << nei  = 0010
+                # ----------------
+                # new_mask  = 0111
+                #
+                # Bitwise OR adds the new node to visited set
+                new_mask = mask | (1 << nei)
+
+                # If we've already visited this exact state,
+                # skip it
+                #
+                # Same node + same mask = duplicate state
+                if (nei, new_mask) in visited:
+                    continue
+
+                # Mark new state as visited
+                visited.add((nei, new_mask))
+
+                # Add new state to BFS queue
+                #
+                # nei       -> current node
+                # new_mask  -> updated visited nodes
+                # dist + 1  -> one more edge travelled
+                queue.append((nei, new_mask, dist + 1))
+
+        # Safety return (should never happen)
+        return -1
