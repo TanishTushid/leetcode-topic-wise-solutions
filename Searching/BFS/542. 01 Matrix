@@ -1,0 +1,73 @@
+from collections import deque
+from typing import List
+
+class Solution:
+    def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
+
+        # Number of rows
+        rows = len(mat)
+
+        # Number of columns
+        cols = len(mat[0])
+
+        # BFS queue
+        queue = deque()
+
+        # Distance matrix
+        # -1 means not visited yet
+        dist = [[-1] * cols for _ in range(rows)]
+
+        # Traverse the matrix
+        for r in range(rows):
+            for c in range(cols):
+
+                # If current cell is 0
+                if mat[r][c] == 0:
+
+                    # Add it as a BFS source
+                    queue.append((r, c))
+
+                    # Distance of a 0 from itself is 0
+                    dist[r][c] = 0
+
+        # Four possible directions
+        directions = [
+            (1, 0),   # Down
+            (-1, 0),  # Up
+            (0, 1),   # Right
+            (0, -1)   # Left
+        ]
+
+        # Run BFS
+        while queue:
+
+            # Get front cell
+            r, c = queue.popleft()
+
+            # Explore all 4 neighbors
+            for dr, dc in directions:
+
+                # Compute new row
+                nr = r + dr
+
+                # Compute new column
+                nc = c + dc
+
+                # Check:
+                # 1. Inside matrix
+                # 2. Not visited before
+                if (
+                    0 <= nr < rows and
+                    0 <= nc < cols and
+                    dist[nr][nc] == -1
+                ):
+
+                    # Neighbor distance =
+                    # Current distance + 1
+                    dist[nr][nc] = dist[r][c] + 1
+
+                    # Push neighbor into queue
+                    queue.append((nr, nc))
+
+        # Return final distance matrix
+        return dist
