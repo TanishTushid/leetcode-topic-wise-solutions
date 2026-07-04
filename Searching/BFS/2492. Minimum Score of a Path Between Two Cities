@@ -1,0 +1,18 @@
+class Solution:
+    def minScore(self, n: int, roads: List[List[int]]) -> int:
+
+        graph = defaultdict(list)
+        for u,v, distance in roads:
+            graph[u].append((v, distance))
+            graph[v].append((u, distance))
+        result = float("inf")
+        queue = deque([1])
+        visited = {1}
+        while queue:
+            city = queue.popleft()
+            for neighbor, distance in graph[city]:
+                result = min(result, distance)
+                if neighbor not in visited:
+                    visited.add(neighbor)
+                    queue.append(neighbor)
+        return result
