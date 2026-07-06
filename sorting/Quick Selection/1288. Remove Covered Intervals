@@ -1,0 +1,26 @@
+class Solution:
+    def removeCoveredIntervals(self, intervals: List[List[int]]) -> int:
+        
+        def quick_sort(left, right):
+            if left >= right:
+                return 
+            pivot = intervals[right]
+            i = left
+            for j in range(left, right):
+                 if (intervals[j][0] < pivot[0]) or (
+                    intervals[j][0] == pivot[0] and intervals[j][1] > pivot[1]
+                ):
+                    intervals[i], intervals[j] = intervals[j], intervals[i]
+                    i+=1
+            intervals[i], intervals[right] = intervals[right], intervals[i]
+            quick_sort(left, i -1)
+            quick_sort(i +1, right)
+
+        quick_sort(0, len(intervals) -1)
+        count = 0
+        max_end = -1
+        for start, end in intervals:
+            if end > max_end:
+                count +=1
+                max_end = end
+        return count 
