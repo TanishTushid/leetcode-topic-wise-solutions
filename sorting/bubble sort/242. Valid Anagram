@@ -1,0 +1,23 @@
+
+class Solution:
+    def bubble_sort(self, arr):
+        n = len(arr)
+        for i in range(n):
+            swapped = False
+            for j in range(n -i -1):
+                if arr[j] > arr[j +1]:
+                    #swap 
+                    arr[j], arr[j+1] = arr[j+1], arr[j]
+                    swapped = True
+            if not swapped:
+                break
+        return arr
+
+    def isAnagram(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+        s = list(s)
+        t = list(t)
+        s = self.bubble_sort(s)
+        t = self.bubble_sort(t)
+        return s == t
