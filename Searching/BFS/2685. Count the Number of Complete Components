@@ -1,0 +1,37 @@
+class Solution:
+    def countCompleteComponents(self, n: int, edges: List[List[int]]) -> int:
+        
+        graph = defaultdict(list)
+        for v, u in edges:
+            graph[v].append(u)
+            graph[u].append(v)
+        
+        visited = set()
+        complete = 0
+
+        for start in range(n):
+            if start in visited:
+                continue
+            queue = deque([start])
+            visited.add(start)
+            component = []
+            
+            while queue:
+                node = queue.popleft()
+                component.append(node)
+
+                for neighbor in graph[node]:
+                    if neighbor not in visited:
+                        visited.add(neighbor)
+                        queue.append(neighbor)
+
+            size = len(component)
+            is_complete = True
+            for node in component:
+                if len(graph[node]) != size -1:
+                    is_complete = False
+                    break 
+            if is_complete:
+                complete += 1
+        return complete
+    
