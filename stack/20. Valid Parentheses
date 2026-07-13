@@ -1,0 +1,21 @@
+class Solution:
+    def isValid(self, s: str) -> bool:
+        hashmap = {
+            '(':')',
+            '[':']',
+            '{':'}'
+        }
+        stack = []
+        for ch in s:
+            if ch in hashmap:
+                stack.append(ch)
+            else:
+                if not stack:
+                    return False
+                #last opening bracket
+                top = stack.pop()
+                #check if it match
+                if hashmap[top] !=ch:
+                    return False
+        #stack should be empty
+        return len(stack) ==0
