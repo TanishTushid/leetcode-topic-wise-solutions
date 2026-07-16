@@ -1,0 +1,26 @@
+class Solution:
+    def asteroidCollision(self, asteroids: List[int]) -> List[int]:
+        stack = []
+
+        for asteroid in asteroids:
+
+            # Continue while a collision is possible
+            while stack and stack[-1] > 0 and asteroid < 0:
+
+                # Top asteroid is smaller -> destroy it
+                if stack[-1] < -asteroid:
+                    stack.pop()
+                    continue
+
+                # Both are equal -> destroy both
+                elif stack[-1] == -asteroid:
+                    stack.pop()
+
+                # Current asteroid is destroyed
+                break
+
+            else:
+                # No collision happened, or current asteroid survived
+                stack.append(asteroid)
+
+        return stack
