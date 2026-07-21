@@ -1,0 +1,20 @@
+class Solution:
+    def timeRequiredToBuy(self, tickets: List[int], k: int) -> int:
+        queue = deque()
+        for i, people in enumerate(tickets):
+            queue.append((i, people))
+        
+        time = 0
+
+        while queue:
+            idx, remaining = queue.popleft()
+
+            # Buy one ticket
+            remaining -= 1
+            time += 1
+
+            if idx == k and remaining == 0:
+                return time
+            if remaining > 0:
+                queue.append((idx, remaining))
+        return time  
