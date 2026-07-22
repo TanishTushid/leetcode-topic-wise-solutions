@@ -1,0 +1,19 @@
+class Solution:
+    def countStudents(self, students: List[int], sandwiches: List[int]) -> int:
+        
+        queue = deque(students)
+        index = 0          # first sandwich
+        count = 0          # consecutive failures
+
+        while queue and count < len(queue):
+
+            student = queue.popleft()
+
+            if student == sandwiches[index]:
+                index += 1
+                count = 0       # someone ate
+            else:
+                queue.append(student)
+                count += 1      # one failed attempt
+
+        return len(queue)
