@@ -1,0 +1,15 @@
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        
+        if len(s) != len(t):
+            return False
+        hash_table = {}
+        for num in s:
+            hash_table[num] = hash_table.get(num, 0)+1
+        for num in t:
+            if num not in hash_table:
+                return False
+            hash_table[num] -=1
+            if hash_table[num]<0:
+                return False
+        return True 
