@@ -1,0 +1,9 @@
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        hashtable = {}
+        for num in nums:
+            hashtable[num] = hashtable.get(num, 0)+1
+        for num in hashtable:
+            if hashtable[num] > len(nums) // 2:
+                return num
+        
