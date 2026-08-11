@@ -1,0 +1,29 @@
+class Solution:
+    def missingInteger(self, nums: List[int]) -> int:
+        
+        hashtable = {}
+        for num in nums:
+            hashtable[num] = hashtable.get(num, 0) + 1
+        sequential = []   # store numbers
+        for num in hashtable:
+            if not sequential:       # first number
+                sequential.append(num)
+            elif num == sequential[-1] + 1:
+                sequential.append(num)
+            else:
+                break
+        ans = sum(sequential)
+        while ans in hashtable:
+            ans += 1
+        return ans
+        """
+
+        sequential_sum = nums[0]
+        for i in range(1, len(nums)):
+            if nums[i] == nums[i-1]+1:
+                sequential_sum += nums[i]
+        hashtable = set(nums)
+        while sequential_sum in hashtable:
+            sequential_sum +=1
+        return sequential_sum
+        """
