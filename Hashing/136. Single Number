@@ -1,0 +1,10 @@
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        hashtable = {}
+        for num in nums:
+            hashtable[num] = hashtable.get(num, 0)+1
+        frequency_list = [] 
+        for num in hashtable:
+            frequency_list.append((num, hashtable[num]))
+        frequency_list.sort(key=lambda x: x[1])
+        return frequency_list[0][0]
