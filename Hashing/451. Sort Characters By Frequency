@@ -1,0 +1,13 @@
+class Solution:
+    def frequencySort(self, s: str) -> str:
+        hashtable = {}
+        for ch in s:
+            hashtable[ch] = hashtable.get(ch, 0)+1
+        frequency_list =[]
+        for ch in hashtable:
+            frequency_list.append((ch,hashtable[ch]))
+        frequency_list.sort(key=lambda x:x[1], reverse =True)
+        ans=""
+        for ch, freq in frequency_list:
+            ans += ch*freq
+        return ans  
