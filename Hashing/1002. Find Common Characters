@@ -1,0 +1,26 @@
+class Solution:
+    def commonChars(self, words: List[str]) -> List[str]:
+        hashtable = {}
+
+        for ch in words[0]:
+            hashtable[ch] = hashtable.get(ch, 0) + 1
+
+        for word in words[1:]:
+            current = {}
+
+            for ch in word:
+                current[ch] = current.get(ch, 0) + 1
+
+            for ch in hashtable:
+                hashtable[ch] = min(
+                    hashtable[ch],
+                    current.get(ch, 0)
+                )
+
+        result = []
+
+        for ch, count in hashtable.items():
+            for _ in range(count):
+                result.append(ch)
+
+        return result
