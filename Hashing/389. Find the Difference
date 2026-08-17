@@ -1,0 +1,10 @@
+class Solution:
+    def findTheDifference(self, s: str, t: str) -> str:
+        hashtable = {}
+        for ch in s:
+            hashtable[ch] = hashtable.get(ch, 0)+1
+        for ch in t:
+            if ch not in hashtable or hashtable[ch] == 0:
+                return ch
+            hashtable[ch] -= 1
+        return ''
