@@ -1,0 +1,46 @@
+class Solution:
+    def maxNumberOfFamilies(self, n: int, reservedSeats: List[List[int]]) -> int:
+        
+        reservedseat = {}
+
+        # Store reserved seats row-wise
+        for row, seat in reservedSeats:
+            if row not in reservedseat:
+                reservedseat[row] = set()
+            
+            reservedseat[row].add(seat)
+
+        # Initially every row can accommodate 2 families
+        result = 2 * n
+
+        # Only rows having reserved seats need to be checked
+        for seats in reservedseat.values():
+
+            left = {2, 3, 4, 5}
+            middle = {4, 5, 6, 7}
+            right = {6, 7, 8, 9}
+
+            # This row was initially counted as 2
+            # Now calculate how many it can actually accommodate
+
+            if not (seats & left) and not (seats & right):
+                # Can still accommodate 2
+                continue
+
+            elif not (seats & left):
+                # Only left group available
+                result -= 1
+
+            elif not (seats & right):
+                # Only right group available
+                result -= 1
+
+            elif not (seats & middle):
+                # Middle group available
+                result -= 1
+
+            else:
+                # No group possible
+                result -= 2
+
+        return result
