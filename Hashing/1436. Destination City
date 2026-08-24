@@ -1,0 +1,14 @@
+class Solution:
+    def destCity(self, paths: List[List[str]]) -> str:
+        source_cities = set()
+
+        for i in range(len(paths)):
+            source_cities.add(paths[i][0])
+
+        for i in range(len(paths)):
+            destination = paths[i][1]
+
+            if destination not in source_cities:
+                return destination
+
+        return ''
