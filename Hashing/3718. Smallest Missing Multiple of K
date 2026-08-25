@@ -1,0 +1,13 @@
+class Solution:
+    def missingMultiple(self, nums: List[int], k: int) -> int:
+        '''
+        hashtable = {}
+        for num in nums:
+            hashtable[num] = hashtable.get(num, 0)+1
+        '''
+        seen = set(nums)
+        ans = k
+        while ans in seen:
+            ans += k
+        return ans 
+        
