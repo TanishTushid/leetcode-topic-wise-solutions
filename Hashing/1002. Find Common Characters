@@ -4,7 +4,7 @@ class Solution:
 
         for ch in words[0]:
             hashtable[ch] = hashtable.get(ch, 0) + 1
-
+ 
         for word in words[1:]:
             current = {}
 
