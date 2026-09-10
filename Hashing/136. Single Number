@@ -8,3 +8,4 @@ class Solution:
             frequency_list.append((num, hashtable[num]))
         frequency_list.sort(key=lambda x: x[1])
         return frequency_list[0][0]
+
