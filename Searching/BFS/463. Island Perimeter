@@ -1,0 +1,21 @@
+class Solution:
+    def islandPerimeter(self, grid: List[List[int]]) -> int:
+        rows = len(grid)
+        cols = len(grid[0])
+        perimeter = 0
+        queue = deque()
+        for i in range(rows):
+            for j in range(cols):
+                if grid[i][j] == 1:
+                    perimeter += 4
+                    queue.append((i,j))
+        direction = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+        while queue:
+            r, c = queue.pop()
+            for dr, dc in direction:
+                nr = dr +r
+                nc = dc +c
+                if 0 <=nr <rows and 0 <=nc <cols:
+                    if grid[nr][nc] == 1:
+                        perimeter -=1
+        return perimeter
