@@ -1,0 +1,20 @@
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def getDecimalValue(self, head: ListNode | None) -> int:
+        
+        def length(node):
+            if not node:
+                return 0
+            return 1 + length(node.next)
+
+        def helper(node, power):
+            if not node:
+                return 0
+            return node.val*(2**power) + helper(node.next, power -1)
+        n = length(head)
+        return helper(head, n-1)
+
