@@ -1,0 +1,20 @@
+class Solution:
+    def sortArray(self, nums: list[int]) -> list[int]:
+        
+        def quick_sort(arr, low, high):
+            if low< high:
+                pivot_idx = partion(arr, low, high)
+                quick_sort(arr, low, pivot_idx -1)
+                quick_sort(arr, pivot_idx +1, high)
+
+        def partion(num, low, high):
+            pivot = num[high]
+            i = low -1
+            for j in range(low, high):
+                if num[j] <= pivot:
+                    i +=1
+                    num[i], num[j] = num[j], num[i]
+            num[i+1], num[high] = num[high], num[i+1]
+            return i +1
+        quick_sort(nums, 0, len(nums)-1)
+        return nums
