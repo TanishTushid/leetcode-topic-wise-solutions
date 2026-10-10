@@ -1,0 +1,50 @@
+
+from collections import deque
+
+class Solution:
+    def orangesRotting(self, grid: list[list[int]]) -> int:
+        row = len(grid)
+        col = len(grid[0])
+
+        queue = deque()
+        fresh = 0
+
+        # Step 1: Find all rotten oranges and count fresh oranges
+        for r in range(row):
+            for c in range(col):
+                if grid[r][c] == 2:
+                    queue.append((r, c))
+                elif grid[r][c] == 1:
+                    fresh += 1
+
+        # No fresh oranges
+        if fresh == 0:
+            return 0
+
+        minutes = 0
+        direction = [(1, 0), (-1, 0), (0, -1), (0, 1)]
+
+        # Step 2: Multi-source BFS
+        while queue and fresh > 0:
+
+            # Process only the current level
+            for _ in range(len(queue)):
+                r, c = queue.popleft()
+
+                for dr, dc in direction:
+                    nr = r + dr
+                    nc = c + dc
+
+                    if (0 <= nr < row and
+                        0 <= nc < col and
+                        grid[nr][nc] == 1):
+
+                        grid[nr][nc] = 2
+                        fresh -= 1
+                        queue.append((nr, nc))
+
+            # One minute passes after a complete level
+            minutes += 1
+
+        # Step 3: Check whether any fresh oranges remain
+        return minutes if fresh == 0 else -1
