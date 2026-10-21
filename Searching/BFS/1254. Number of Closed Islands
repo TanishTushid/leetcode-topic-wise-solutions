@@ -1,0 +1,40 @@
+from collections import deque
+
+class Solution:
+    def closedIsland(self, grid: list[list[int]]) -> int:
+        row = len(grid)
+        col = len(grid[0])
+        count = 0
+
+        direction = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+
+        for r in range(row):
+            for c in range(col):
+
+                if grid[r][c] == 0:
+                    queue = deque([(r, c)])
+                    grid[r][c] = 1
+                    closed = True
+
+                    while queue:
+                        x, y = queue.popleft()
+
+                        # Island touches the boundary
+                        if x == 0 or x == row - 1 or y == 0 or y == col - 1:
+                            closed = False
+
+                        for dr, dc in direction:
+                            nr = x + dr
+                            nc = y + dc
+
+                            if (0 <= nr < row and
+                                0 <= nc < col and
+                                grid[nr][nc] == 0):
+
+                                grid[nr][nc] = 1
+                                queue.append((nr, nc))
+
+                    if closed:
+                        count += 1
+
+        return count
