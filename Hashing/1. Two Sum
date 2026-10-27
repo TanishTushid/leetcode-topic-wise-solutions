@@ -1,0 +1,13 @@
+class Solution:
+    def twoSum(self, nums: list[int], target: int) -> list[int]:
+        hashtable = {}
+
+        for i, num in enumerate(nums):
+            complement = target - num
+
+            if complement in hashtable:
+                return [hashtable[complement], i]
+
+            hashtable[num] = i
+
+        return []
